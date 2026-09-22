@@ -23,14 +23,29 @@ public class Main {
         vacations.addItem(photo2);
         vacations.addItem(photo3);
 
-        // Create the folder hierarchy
+        // Create hierarchy
         pictures.addItem(vacations);
         root.addItem(documents);
         root.addItem(pictures);
 
-        // Count files recursively
+        // Phase 1
         int fileCount = FileSystemAnalyzer.countFilesRecursive(root);
-
         System.out.println("Total files: " + fileCount);
+
+        // Phase 2 - Total size
+        int totalSize = FileSystemAnalyzer.calculateTotalSizeRecursive(root);
+        System.out.println("Total size: " + totalSize + " KB");
+
+        // Phase 2 - Largest file
+        FileItem largestFile =
+                FileSystemAnalyzer.findLargestFileRecursive(root);
+
+        if (largestFile != null) {
+            System.out.println("Largest file: " + largestFile.getName());
+            System.out.println("Largest file size: "
+                    + largestFile.getSizeInKB() + " KB");
+        } else {
+            System.out.println("No files found.");
+        }
     }
 }
