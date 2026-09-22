@@ -1,14 +1,14 @@
+import java.util.Stack;
+
 public class FileSystemAnalyzer {
 
     // Phase 1
     public static int countFilesRecursive(FileSystemItem item) {
 
-        // Base case
         if (item instanceof FileItem) {
             return 1;
         }
 
-        // General case
         if (item instanceof Folder) {
             Folder folder = (Folder) item;
             int count = 0;
@@ -23,15 +23,13 @@ public class FileSystemAnalyzer {
         return 0;
     }
 
-    // Phase 2 - Calculate total storage
+    // Phase 2
     public static int calculateTotalSizeRecursive(FileSystemItem item) {
 
-        // Base case
         if (item instanceof FileItem) {
             return item.getSizeInKB();
         }
 
-        // General case
         if (item instanceof Folder) {
             Folder folder = (Folder) item;
             int totalSize = 0;
@@ -46,15 +44,13 @@ public class FileSystemAnalyzer {
         return 0;
     }
 
-    // Phase 2 - Find largest file
+    // Phase 2
     public static FileItem findLargestFileRecursive(FileSystemItem item) {
 
-        // Base case
         if (item instanceof FileItem) {
             return (FileItem) item;
         }
 
-        // General case
         if (item instanceof Folder) {
             Folder folder = (Folder) item;
             FileItem largest = null;
@@ -64,7 +60,7 @@ public class FileSystemAnalyzer {
 
                 if (childLargest != null &&
                         (largest == null ||
-                         childLargest.getSizeInKB() > largest.getSizeInKB())) {
+                        childLargest.getSizeInKB() > largest.getSizeInKB())) {
 
                     largest = childLargest;
                 }
@@ -74,5 +70,34 @@ public class FileSystemAnalyzer {
         }
 
         return null;
+    }
+
+    // Phase 3
+    public static int countFilesIterative(Folder rootFolder) {
+
+        Stack<FileSystemItem> stack = new Stack<>();
+
+        stack.push(rootFolder);
+
+        int fileCount = 0;
+
+        while (!stack.isEmpty()) {
+
+            FileSystemItem current = stack.pop();
+
+            if (current instanceof FileItem) {
+                fileCount++;
+            }
+
+            else if (current instanceof Folder) {
+                Folder folder = (Folder) current;
+
+                for (FileSystemItem child : folder.getItems()) {
+                    stack.push(child);
+                }
+            }
+        }
+
+        return fileCount;
     }
 }
