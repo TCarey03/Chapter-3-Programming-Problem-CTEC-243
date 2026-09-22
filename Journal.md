@@ -27,3 +27,15 @@ The iterative solution uses an explicit Stack instead of the runtime call stack.
 For overhead space, both approaches need space to keep track of folders that still need to be processed. The recursive version uses the runtime call stack, while the iterative version uses a Stack data structure.
 
 I find the recursive version easier to read and maintain for this problem because the recursive call naturally follows the folder hierarchy. The iterative version is useful because it shows how recursion can be replaced with an explicit data structure.
+
+-----------------------
+
+Phase 4
+
+If a folder contained a reference to itself or to one of its ancestor folders, the recursive method could continue calling itself forever because the problem would never become smaller. Eventually, the program would run out of stack space and produce a StackOverflowError.
+
+The iterative stack method would also have a problem. It would keep finding the same folders and pushing them onto the stack repeatedly. The stack would continue growing because there would be no point where the circular reference ends.
+
+This relates to the Smaller-Caller rule because recursion needs each call to move toward a smaller problem and eventually reach a base case. A circular reference violates that rule because the traversal can return to a folder that was already visited instead of moving toward a smaller problem.
+
+A possible solution for a real file system would be to keep track of folders that have already been visited. That would prevent the program from processing the same folder repeatedly.
