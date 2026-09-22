@@ -15,3 +15,15 @@ The findLargestFileRecursive method returns null when a folder does not contain 
 When checking the results from each child, I first make sure that childLargest is not null. If it is not null, I compare its size to the current largest file. If there is no current largest file or the child file is larger, I update largest.
 
 This prevents a NullPointerException because I never call getSizeInKB() on a null reference. Empty folders can therefore be handled safely by the recursive method.
+
+---------------------
+
+Phase 3
+
+The recursive solution is more intuitive to me because it matches the structure of the file system. A folder contains other items, so the method can call itself on each child folder.
+
+The iterative solution uses an explicit Stack instead of the runtime call stack. It takes a little more code because I have to manually push and pop items, but it avoids recursive method calls.
+
+For overhead space, both approaches need space to keep track of folders that still need to be processed. The recursive version uses the runtime call stack, while the iterative version uses a Stack data structure.
+
+I find the recursive version easier to read and maintain for this problem because the recursive call naturally follows the folder hierarchy. The iterative version is useful because it shows how recursion can be replaced with an explicit data structure.
