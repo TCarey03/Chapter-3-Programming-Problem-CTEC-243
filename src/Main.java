@@ -15,7 +15,7 @@ public class Main {
         FileItem photo2 = new FileItem("Mountain.jpg", 2500);
         FileItem photo3 = new FileItem("Hotel.jpg", 1500);
 
-        // Add files to folders
+        // Add files
         documents.addItem(resume);
         documents.addItem(notes);
 
@@ -29,23 +29,44 @@ public class Main {
         root.addItem(pictures);
 
         // Phase 1
-        int fileCount = FileSystemAnalyzer.countFilesRecursive(root);
-        System.out.println("Total files: " + fileCount);
+        int recursiveCount =
+                FileSystemAnalyzer.countFilesRecursive(root);
 
-        // Phase 2 - Total size
-        int totalSize = FileSystemAnalyzer.calculateTotalSizeRecursive(root);
-        System.out.println("Total size: " + totalSize + " KB");
+        System.out.println("Recursive file count: "
+                + recursiveCount);
 
-        // Phase 2 - Largest file
+        // Phase 2
+        int totalSize =
+                FileSystemAnalyzer.calculateTotalSizeRecursive(root);
+
+        System.out.println("Total size: "
+                + totalSize + " KB");
+
         FileItem largestFile =
                 FileSystemAnalyzer.findLargestFileRecursive(root);
 
         if (largestFile != null) {
-            System.out.println("Largest file: " + largestFile.getName());
+            System.out.println("Largest file: "
+                    + largestFile.getName());
+
             System.out.println("Largest file size: "
                     + largestFile.getSizeInKB() + " KB");
+        }
+
+        // Phase 3
+        int iterativeCount =
+                FileSystemAnalyzer.countFilesIterative(root);
+
+        System.out.println("Iterative file count: "
+                + iterativeCount);
+
+        // Verify both methods agree
+        if (recursiveCount == iterativeCount) {
+            System.out.println("Verification successful!");
+            System.out.println("Both methods found "
+                    + recursiveCount + " files.");
         } else {
-            System.out.println("No files found.");
+            System.out.println("Verification failed!");
         }
     }
 }
